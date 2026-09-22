@@ -1,0 +1,26 @@
+{
+  "name": "iso42001-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP server for working an AI management system through ISO/IEC 42001: browse the standard's structure, generate assessment input fields per clause/control, track status and evidence, and get CISO-oriented guidance.",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "node dist/index.js",
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "test": "tsx --test src/**/*.test.ts"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.6.1",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}
