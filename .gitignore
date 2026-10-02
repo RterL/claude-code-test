@@ -37,3 +37,4 @@ coverage/
 .venv/
 samples/
 __pycache__/
+models/
