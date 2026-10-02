@@ -9,10 +9,9 @@ import re
 import subprocess
 import wave
 
-from common import OUT, RATE, STORY, load_story, normalize
+from common import OUT, RATE, ROOT, STORY, load_story, normalize
 from verify import probe
 
-ROOT = OUT.parent
 MODEL_DIR = ROOT / "models"
 PIPER_VOICE = os.environ.get("PIPER_VOICE", "miro_nl-NL")
 LENGTH_SCALE = float(os.environ.get("LENGTH_SCALE", 1 / (1 + float(RATE.rstrip("%")) / 100)))
