@@ -14,7 +14,7 @@ from verify import probe
 
 ROOT = OUT.parent
 MODEL_DIR = ROOT / "models"
-PIPER_VOICE = os.environ.get("PIPER_VOICE", "nl_NL-pim-medium")
+PIPER_VOICE = os.environ.get("PIPER_VOICE", "miro_nl-NL")
 LENGTH_SCALE = float(os.environ.get("LENGTH_SCALE", 1 / (1 + float(RATE.rstrip("%")) / 100)))
 PARA_DIR = OUT / "piper"
 
@@ -25,10 +25,12 @@ def spoken(text):
 
 def load_voice():
     from piper import PiperVoice
-    model = MODEL_DIR / f"{PIPER_VOICE}.onnx"
-    if not model.exists():
-        raise SystemExit(f"{model} ontbreekt. Download: python -m piper.download_voices {PIPER_VOICE} --download-dir {MODEL_DIR}")
-    return PiperVoice.load(model)
+    # Het Miro-model heet 'miro_nl-NL' (zonder extensie) met config 'miro_nl-NL.onnx.json'; stock-voices eindigen op .onnx
+    model = next((p for p in (MODEL_DIR / f"{PIPER_VOICE}.onnx", MODEL_DIR / PIPER_VOICE) if p.is_file()), None)
+    config = MODEL_DIR / f"{PIPER_VOICE}.onnx.json"
+    if model is None or not config.is_file():
+        raise SystemExit(f"Model of config ontbreekt in {MODEL_DIR}: verwacht {PIPER_VOICE}[.onnx] en {config.name}")
+    return PiperVoice.load(model, config_path=config)
 
 
 def synth_item(voice, text, path):
